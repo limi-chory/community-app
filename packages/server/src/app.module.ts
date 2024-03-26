@@ -16,7 +16,7 @@ import { PostsController } from './posts/posts.controller';
     type: 'postgres',
     host: 'localhost',
     port: 5432,
-    username: 'test',
+    username: 'test3',
     password: 'test',
     database: 'test',
     synchronize: true,
