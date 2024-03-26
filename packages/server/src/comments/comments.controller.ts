@@ -1,27 +1,28 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CommentsService } from './comments.service';
+import { Comment } from 'src/entities/comment.entity';
 
 @Controller('comments')
 export class CommentsController {
     constructor(private readonly commentsService: CommentsService) { }
 
-    @Post()
-    create() {
-        return this.commentsService.create()
+    @Get(':postId')
+    async getAllByPostId(@Param('postId') postId: number): Promise<Comment[]> {
+        return this.commentsService.getAllByPostId(postId);
     }
 
-    @Get(':postId')
-    getAll(@Param('postId') postId: number) {
-
+    @Post()
+    async create(@Body() commentData: Partial<Comment>): Promise<Comment> {
+        return this.commentsService.create(commentData);
     }
 
     @Put(':commentId')
-    update(@Param('commentId') commentId: number) {
-
+    async update(@Param('commentId') commentId: number, @Body() commentData: Partial<Comment>): Promise<Comment> {
+        return this.commentsService.update(commentId, commentData);
     }
 
     @Delete(':commentId')
-    delete(@Param('commentId') commentId: number) {
-
+    async delete(@Param('commentId') commentId: number): Promise<void> {
+        return this.commentsService.delete(commentId);
     }
 }
