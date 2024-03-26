@@ -1,18 +1,26 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Posts } from "./posts.entity";
 
 @Entity()
 export class Comment {
     @PrimaryGeneratedColumn()
-    id: Number;
+    id: number;
 
     @Column()
-    contents: String;
+    contents: string;
     //    author: {
     //        ...
     //    };
 
     @Column()
-    isDeleted: Boolean;
-    //    createdAt: DateTime;
-    //    updatedAt: DateTime;
+    isDeleted: boolean;
+
+    @CreateDateColumn({ type: 'timestamp' })
+    createdAt: Date;
+
+    @UpdateDateColumn({ type: 'timestamp' })
+    updatedAt: Date;
+
+    @ManyToOne(() => Posts, post => post.comments)
+    post: Posts;
 }

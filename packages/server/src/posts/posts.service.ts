@@ -10,8 +10,8 @@ export class PostsService {
         private readonly postsRepository: Repository<Posts>,
     ) { }
 
-    async create(pTitle: string, pContents: string): Promise<Posts> {
-        const post = await this.postsRepository.create({ title: pTitle, contents: pContents })
+    async create(title: string, contents: string): Promise<Posts> {
+        const post = await this.postsRepository.create({ title: title, contents: contents });
         return this.postsRepository.save(post);
     }
 
@@ -28,8 +28,13 @@ export class PostsService {
     }
 
     async update(postId: number, postData: Partial<Posts>): Promise<Posts> {
+        const post = await this.postsRepository.findOne({ where: { id: postId } });
+        if (!post) {
+            throw new NotFoundException(`Post with ID ${postId} is not found.`);
+        }
         await this.postsRepository.update(postId, postData);
-        return await this.postsRepository.findOne({ where: { id: postId } });
+
+        return this.postsRepository.findOne({ where: { id: postId } });
     }
 
     async delete(postId: number): Promise<void> {
