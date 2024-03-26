@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "post": "5432",
+  "username": "test",
+  "password": "test",
+  "database": "Test",
+  "synchronize": true,
+  "logging": true,
+  "entities": [
+    "dist/**/*.entity.{ts,js}"
+  ]
+}
