@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Posts } from "./posts.entity";
-
+import { User } from "./user.entity";
 @Entity()
 export class Comment {
     @PrimaryGeneratedColumn()
@@ -8,9 +8,6 @@ export class Comment {
 
     @Column()
     contents: string;
-    //    author: {
-    //        ...
-    //    };
 
     @Column()
     isDeleted: boolean;
@@ -23,4 +20,7 @@ export class Comment {
 
     @ManyToOne(() => Posts, post => post.comments)
     post: Posts;
+
+    @ManyToOne(() => User, user => user.comment)
+    author: User;
 }
